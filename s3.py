@@ -116,11 +116,15 @@ def createBotoGrabber():
     import sys
     import re
     from urlgrabber.grabber import URLGrabber
+    import ssl
 
     class BotoGrabber(URLGrabber):
         logger = logging.getLogger("yum.verbose.main")
 
         def __init__(self, awsAccessKey, awsSecretKey, baseurl):
+            # Devil: workaround
+            ssl._create_default_https_context = ssl._create_unverified_context
+            
             self.logger.debug("BotoGrabber init BASE_URL=%s" % baseurl)
 
             URLGrabber.__init__(self)
